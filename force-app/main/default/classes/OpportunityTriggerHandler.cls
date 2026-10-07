@@ -10,7 +10,10 @@ public with sharing class OpportunityTriggerHandler {
             }
         }
         if(!oppIdsToSend.isEmpty()){
-            OpportunityIntegrationService.sendOpportunitiesToExternalSystem(oppIdsToSend);
+            
+            OpportunityIntegrationService batchJob = new OpportunityIntegrationService(oppIdsToSend);
+
+            Database.executeBatch(batchJob, 100);
         }
     }
 }
